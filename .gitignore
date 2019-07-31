@@ -94,3 +94,6 @@ local.properties
 .worksheet
 
 .vscode/
+
+.classpath
+.project
