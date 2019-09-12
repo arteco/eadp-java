@@ -1,0 +1,7 @@
+<project name="My Site Title">
+<body>
+    <menu name="Contenido">
+        <item name="Hello" href="hello.html"/>
+    </menu>
+</body>
+</project>
