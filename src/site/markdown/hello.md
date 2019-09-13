@@ -2,6 +2,7 @@
 
 Bienvenido al proyecto 
 
-## esto es markdown
+## Título 
+ 
 
-asfasfsf
+Este proyecto es un ejemplo para el curso de programación en Java
