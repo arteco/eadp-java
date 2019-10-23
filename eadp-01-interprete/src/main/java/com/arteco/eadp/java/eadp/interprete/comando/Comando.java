@@ -74,7 +74,8 @@ public abstract class Comando {
     }
 
     String leerFichero(File fileDest) throws IOException {
-        String result;FileInputStream fis = new FileInputStream(fileDest);
+        String result;
+        FileInputStream fis = new FileInputStream(fileDest);
         byte[] data = new byte[(int) fileDest.length()];
         fis.read(data);
         fis.close();

@@ -38,7 +38,7 @@ public class LsComando extends Comando {
         if (files != null) {
             Arrays.sort(files);
             for (File f : files) {
-                output += f.getName() + (f.isDirectory() ? File.separator : " ("+f.length()+" bytes)") + "\n";
+                output += f.getName() + (f.isDirectory() ? File.separator : " (" + f.length() + " bytes)") + "\n";
             }
         }
         return output;

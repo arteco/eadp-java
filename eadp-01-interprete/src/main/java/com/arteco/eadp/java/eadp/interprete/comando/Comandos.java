@@ -16,27 +16,25 @@
 package com.arteco.eadp.java.eadp.interprete.comando;
 
 /**
- *
  * @author rarnau
  */
 public enum Comandos {
-        LS(LsComando.class), 
-        CD(CdComando.class), 
-        CAT(CatComando.class), 
-        RM(RmComando.class),
-        MKDIR(MkDirComando.class),
-        CP(CpComando.class),
-        APPEND(AppendComando.class),
-        REPLACE(ReplaceComando.class);
-    ;
+    LS(LsComando.class),
+    CD(CdComando.class),
+    CAT(CatComando.class),
+    RM(RmComando.class),
+    MKDIR(MkDirComando.class),
+    CP(CpComando.class),
+    APPEND(AppendComando.class),
+    REPLACE(ReplaceComando.class);;
     private Class<? extends Comando> clase;
 
-    Comandos(Class<? extends Comando> clase){
+    Comandos(Class<? extends Comando> clase) {
         this.clase = clase;
     }
-        
+
     public Class<? extends Comando> getClase() {
         return clase;
     }
-    
+
 }
