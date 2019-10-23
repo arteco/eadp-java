@@ -4,10 +4,12 @@
     <groupId>com.arteco.eadp.java</groupId>
     <artifactId>eadp-java</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
+
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>12</maven.compiler.source>
+        <maven.compiler.target>12</maven.compiler.target>
     </properties>
 
 
@@ -18,27 +20,11 @@
     </organization>
     <description>Aplicación de ejemplo para el curso de Java</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.4.4.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.xml.bind</groupId>
-            <artifactId>jaxb-api</artifactId>
-            <version>2.2.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-            <version>2.2.5</version>
-        </dependency>
-
-    </dependencies>
-
-
+    <modules>
+        <module>eadp-01-interprete</module>
+        <module>eadp-02-hundirlaflota</module>
+        <module>eadp-03-hotelrural</module>
+    </modules>
 
     <reporting>
         <plugins>
