@@ -23,13 +23,11 @@ public class Parser {
     /**
      * Procesa la entrada del usuario ejecutando las acciones que pueda identificar
      *
-     * @param line entrada de texto conteniendo la instrucción a ejecutar
+     * @param arguments argumentos de entrada del usuario [comando, arg1, arg2, ...]
      * @return devuelve la lista de acciones ejecutadas
      */
-    public List<Action> processLine(String line) {
+    public List<Action> processLine(List<Object> arguments) {
         List<Action> executed = new ArrayList<>();
-        List<Object> arguments = parseLine(line);
-
         if (arguments.size() > 0) {
             game.getActions().stream()
                     .filter(a -> a.getName().equals(arguments.get(0)))
@@ -48,7 +46,7 @@ public class Parser {
      * @param line entrada del usuario
      * @return lista de argumentos
      */
-    private List<Object> parseLine(String line) {
+    public List<Object> parseLine(String line) {
         List<Object> arguments = new ArrayList<>();
         try {
             StreamTokenizer streamTokenizer = new StreamTokenizer(new StringReader(line));

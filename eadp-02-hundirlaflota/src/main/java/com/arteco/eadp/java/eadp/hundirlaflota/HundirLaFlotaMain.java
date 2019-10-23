@@ -26,7 +26,8 @@ public class HundirLaFlotaMain {
         String line = readLine();
         while (!"exit".equals(line)) {
             try {
-                List<Action> actions = parser.processLine(line);
+                List<Object> arguments = parser.parseLine(line);
+                List<Action> actions = parser.processLine(arguments);
                 if (actions == null || actions.size() == 0) {
                     String help = parser.printHelp();
                     System.out.println(help);
