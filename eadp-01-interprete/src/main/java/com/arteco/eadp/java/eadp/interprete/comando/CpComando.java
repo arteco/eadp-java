@@ -15,19 +15,38 @@
  */
 package com.arteco.eadp.java.eadp.interprete.comando;
 
+import com.arteco.eadp.java.eadp.interprete.Interprete;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class CpComando extends Comando {
 
-    public CpComando(String[] args) {
-        super(args);
+    public CpComando(Interprete interprete, List<String> args) {
+        super(interprete, args);
     }
 
     @Override
-    public String ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String ejecutar() throws IOException {
+        String result = "Operación no realizada";
+        if (args.size() > 1) {
+            String origen = args.get(1);
+            String destino = args.get(2);
+            File fileOrig = localizaFichero(interprete.getDirectory(), origen);
+            if (fileOrig != null) {
+                File fileDest = localizaOcreaFichero(interprete.getDirectory(), destino);
+                Files.copy(fileOrig.toPath(), fileDest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                result = "Fichero copiado";
+            }
+
+        }
+        return result;
     }
-    
+
 }

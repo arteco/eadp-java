@@ -15,19 +15,32 @@
  */
 package com.arteco.eadp.java.eadp.interprete.comando;
 
+import com.arteco.eadp.java.eadp.interprete.Interprete;
+
+import java.io.File;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class CatComando extends Comando {
 
-    public CatComando(String[] args) {
-        super(args);
+    public CatComando(Interprete interprete, List<String> args) {
+        super(interprete, args);
     }
 
     @Override
-    public String ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String ejecutar() throws Exception {
+        String result = "Fichero no encontrado";
+        if (args.size() > 0) {
+            String destino = args.get(1);
+            File fileDest = localizaFichero(interprete.getDirectory(), destino);
+            if (fileDest != null) {
+                result = leerFichero(fileDest);
+            }
+        }
+        return result;
     }
-    
+
+
 }

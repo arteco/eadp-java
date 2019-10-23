@@ -15,19 +15,42 @@
  */
 package com.arteco.eadp.java.eadp.interprete.comando;
 
+import com.arteco.eadp.java.eadp.interprete.Interprete;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class ReplaceComando extends Comando {
 
-    public ReplaceComando(String[] args) {
-        super(args);
+    public ReplaceComando(Interprete interprete, List<String> args) {
+        super(interprete, args);
     }
 
     @Override
-    public String ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String ejecutar() throws IOException {
+        String result = "Operación no realizada";
+        if (args.size() > 2) {
+            String destino = args.get(1);
+            String buscado = args.get(2);
+            String reemplazo = args.get(3);
+
+            File fileDest = localizaFichero(interprete.getDirectory(), destino);
+            if (fileDest != null) {
+
+                String contenido = leerFichero(fileDest);
+
+                contenido = contenido.replace(buscado, reemplazo);
+
+                escribirFichero(fileDest, contenido);
+
+                result = "Contenido reemplazado";
+            }
+        }
+        return result;
     }
-    
+
 }

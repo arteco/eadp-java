@@ -15,19 +15,40 @@
  */
 package com.arteco.eadp.java.eadp.interprete.comando;
 
+import com.arteco.eadp.java.eadp.interprete.Interprete;
+
+import java.io.File;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class CdComando extends Comando {
 
-    public CdComando(String[] args) {
-        super(args);
+    public CdComando(Interprete interprete, List<String> args) {
+        super(interprete, args);
     }
 
     @Override
     public String ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String result = "Mantenido el directorio actual";
+        if (args.size() > 0) {
+            String destino = args.get(1);
+            if ("..".equals(destino)) {
+                // subir un nivel
+                interprete.setDirectory(interprete.getDirectory().getParentFile());
+                result = "Subido un nivel";
+            } else {
+                // entrar en un sub-directorio
+                File fileDest = localizaFichero(interprete.getDirectory(), destino);
+                if (fileDest != null) {
+                    interprete.setDirectory(fileDest);
+                    result = "Entrando en " + destino;
+                }
+            }
+        }
+        return result;
     }
-    
+
+
 }

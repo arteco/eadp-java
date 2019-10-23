@@ -15,19 +15,53 @@
  */
 package com.arteco.eadp.java.eadp.interprete.comando;
 
+import com.arteco.eadp.java.eadp.interprete.Interprete;
+
+import java.io.File;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class AppendComando extends Comando {
 
-    public AppendComando(String[] args) {
-        super(args);
+    public AppendComando(Interprete interprete, List<String> args) {
+        super(interprete, args);
     }
 
     @Override
-    public String ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String ejecutar() throws Exception {
+        String result = "Operación no realizada";
+        if (args.size() > 0) {
+            String destino = args.get(1);
+
+            File fileDest = localizaOcreaFichero(interprete.getDirectory(), destino);
+
+            String data = obtenerContenido();
+
+            escribirFichero(fileDest, data);
+
+            result = "Fichero modificado";
+
+        }
+        return result;
     }
-    
+
+
+    /**
+     * Obtiene el resto de argumentos del usuario que irán como contenido a concatenar en el fichero
+     *
+     * @return devuelve el concatenado de todos con espacios
+     */
+    private String obtenerContenido() {
+        List<String> contenido = args.subList(2, args.size());
+        String data = "";
+        for (String palabra : contenido) {
+            data += palabra + " ";
+        }
+        data = data.trim() + "\n";
+        return data;
+    }
+
+
 }

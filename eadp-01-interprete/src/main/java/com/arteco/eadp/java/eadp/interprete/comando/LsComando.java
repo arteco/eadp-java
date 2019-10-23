@@ -15,19 +15,33 @@
  */
 package com.arteco.eadp.java.eadp.interprete.comando;
 
+import com.arteco.eadp.java.eadp.interprete.Interprete;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class LsComando extends Comando {
 
-    public LsComando(String[] args) {
-        super(args);
+    public LsComando(Interprete interprete, List<String> args) {
+        super(interprete, args);
     }
 
     @Override
     public String ejecutar() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        File directory = interprete.getDirectory();
+        File[] files = directory.listFiles();
+        String output = "";
+        if (files != null) {
+            Arrays.sort(files);
+            for (File f : files) {
+                output += f.getName() + (f.isDirectory() ? File.separator : " ("+f.length()+" bytes)") + "\n";
+            }
+        }
+        return output;
     }
-    
+
 }

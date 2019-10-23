@@ -18,23 +18,47 @@ package com.arteco.eadp.java.eadp.interprete;
 import com.arteco.eadp.java.eadp.interprete.comando.Comando;
 import com.arteco.eadp.java.eadp.interprete.comando.Comandos;
 
+import java.io.File;
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
+import java.util.List;
+
 /**
- *
  * @author rarnau
  */
 public class Interprete {
 
+    private File directory;
+
+    public Interprete() {
+        // usa el directorio actual
+        this(".");
+    }
+
+    public Interprete(String path) {
+        // usa el directorio actual
+        this.directory = new File(path);
+        System.out.println("\nCreado el intérprete en " + this.directory.getAbsolutePath());
+    }
+
     Comando procesaLinea(String linea) {
         Comando result = null;
-        try{
-            String[] parts = linea.split(" ");
-            Comandos comando = Comandos.valueOf(parts[0].toUpperCase());
-            result = (Comando) comando.getClase().getConstructor(new Class[]{String[].class}).newInstance(parts);
-        } catch(Exception e){
+        try {
+            List<String> parts = Arrays.asList(linea.split(" "));
+            Comandos comando = Comandos.valueOf(parts.get(0).toUpperCase());
+            Constructor<? extends Comando> constructor = comando.getClase().getConstructor(Interprete.class, List.class);
+            result = constructor.newInstance(this, parts);
+        } catch (Exception e) {
             System.err.println("Error :" + e.getMessage());
         }
-       
         return result;
     }
-    
+
+    public File getDirectory() {
+        return directory;
+    }
+
+    public void setDirectory(File directory) {
+        this.directory = directory;
+    }
 }

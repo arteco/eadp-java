@@ -17,42 +17,43 @@ package com.arteco.eadp.java.eadp.interprete;
 
 import com.arteco.eadp.java.eadp.interprete.comando.Comando;
 import com.arteco.eadp.java.eadp.interprete.comando.Comandos;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
 /**
- *
  * @author rarnau
  */
 public class InterpreteMain {
-    
-    public static void main(String[] args) throws IOException{
+
+    public static void main(String[] args) throws Exception {
         Interprete interprete = new Interprete();
-        
+
         String linea = leerEntradaUsuario();
-        while(!"exit".equals(linea)){
+        while (!"exit".equals(linea)) {
             Comando comando = interprete.procesaLinea(linea);
 
-            if (comando != null){
+            if (comando != null) {
                 String output = comando.ejecutar();
                 System.out.println(output);
             } else {
-                 System.out.println("Comando no reconocido.");
-                 System.out.println("Los comandos disponibles son :"+List.of(Comandos.values()));
-                 System.out.println("Escriba [exit] para terminar");
-                 System.out.println("Por favor, inténtelo de nuevo.");
+                System.out.println("Comando no reconocido.");
+                System.out.println("Los comandos disponibles son :" + List.of(Comandos.values()));
+                System.out.println("Escriba [exit] para terminar");
+                System.out.println("Por favor, inténtelo de nuevo.");
             }
-            
+
             linea = leerEntradaUsuario();
         }
     }
 
     private static String leerEntradaUsuario() throws IOException {
-        System.out.println("Qué desea hacer?");
+        System.out.println("\n------------------");
+        System.out.println("> Qué desea hacer?");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         return br.readLine();
     }
-    
+
 }
