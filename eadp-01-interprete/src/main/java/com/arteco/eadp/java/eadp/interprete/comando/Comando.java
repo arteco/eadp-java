@@ -37,9 +37,22 @@ public abstract class Comando {
         this.interprete = interprete;
     }
 
-
+    /**
+     * Método abstracto de obligatoria implementación en cada uno de los comandos
+     *
+     * @return devuelve la salida generada por la ejecución del comando
+     * @throws Exception permite lanzar excepciones hacia arriba
+     */
     public abstract String ejecutar() throws Exception;
 
+    /**
+     * Localiza el fichero contenido dentro del directorio según el nombre indicado en el segundo argumento.
+     * Si no lo encuentra devuelve null.
+     *
+     * @param directory directorio donde buscar
+     * @param destino   nombre del fichero a localizar en el directorio
+     * @return devuelve File si encuentra el fichero dentro del directorio
+     */
     File localizaFichero(File directory, String destino) {
         File result = null;
         if (directory != null) {
@@ -56,6 +69,14 @@ public abstract class Comando {
         return result;
     }
 
+    /**
+     * Localiza el fichero contenido dentro del directorio según el nombre indicado en el segundo argumento.
+     * Si no lo encuentra creará un fichero vacío.
+     *
+     * @param directory directorio donde buscar o crear si es necesario
+     * @param destino   nombre del fichero a localizar o crear en el directorio
+     * @return devuelve File del fichero encontraro o creado dentro del directorio
+     */
     File localizaOcreaFichero(File directory, String destino) throws IOException {
         File fileDest = localizaFichero(directory, destino);
         if (fileDest == null) {
@@ -65,6 +86,13 @@ public abstract class Comando {
         return fileDest;
     }
 
+    /**
+     * Escribe el contenido de data dentro del fichero indicado
+     *
+     * @param fileDest fichero de destino donde escribir
+     * @param data     datos a volcar dentro del fichero
+     * @throws IOException si no puede escribir en el fichero lanzará error
+     */
     void escribirFichero(File fileDest, String data) throws IOException {
         if (fileDest != null && data != null) {
             FileOutputStream fis = new FileOutputStream(fileDest, true);
@@ -73,6 +101,13 @@ public abstract class Comando {
         }
     }
 
+    /**
+     * Operación para leer el contenido de un fichero en un String.
+     *
+     * @param fileDest fichero a leer
+     * @return contenido en String del fichero leído
+     * @throws IOException error en caso de no poder leer el fichero
+     */
     String leerFichero(File fileDest) throws IOException {
         String result;
         FileInputStream fis = new FileInputStream(fileDest);
