@@ -1,10 +1,11 @@
 package com.arteco.eadp.java.eadp.hundirlaflota;
 
-import com.arteco.eadp.java.eadp.hundirlaflota.action.Action;
+import com.arteco.eadp.java.eadp.hundirlaflota.action.ActionResult;
 import com.arteco.eadp.java.eadp.hundirlaflota.game.Game;
 import com.arteco.eadp.java.eadp.hundirlaflota.game.Parser;
+import com.arteco.eadp.java.eadp.hundirlaflota.writer.MixedWriter;
+import com.arteco.eadp.java.eadp.hundirlaflota.writer.Writer;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,22 +25,23 @@ public class HundirLaFlotaMain {
     public static void main(String[] args) throws Exception {
         Game game = new Game();
         Parser parser = new Parser(game);
+        Writer writer = new MixedWriter();
         System.out.println("======================================");
         System.out.println("Bienvenido al juego de hundir la flota");
         System.out.println("======================================");
 
         // inicializamos el juego automáticamente
-        parser.executeActions(Collections.singletonList("start"));
+        parser.executeActions(writer, Collections.singletonList("start"));
         parser.start(inputs);
 
-        while (!game.isEnd()) {
+        while (!game.isEnding()) {
             System.out.println("Indique su acción :");
 
             // obtenemos la entrada de usuario con timeout, si no provoca un lanzamiento fuera del tablero
             List<Object> arguments = getArgumentsWithTimeout(10, "launch", -1., -1.);
 
             // Se ejecutan las acciones registradas
-            List<Action> actions = parser.executeActions(arguments);
+            List<ActionResult> actions = parser.executeActions(writer, arguments);
 
             // si el usuario ha escrito una línea en blanco se imprime la ayuda
             if (actions == null || actions.size() == 0) {
@@ -62,7 +64,6 @@ public class HundirLaFlotaMain {
         }
         return result;
     }
-
 
 
 }

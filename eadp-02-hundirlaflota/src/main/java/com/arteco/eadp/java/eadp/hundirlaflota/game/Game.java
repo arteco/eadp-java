@@ -69,11 +69,11 @@ public class Game {
         return stb.toString();
     }
 
-    public void terminate() {
+    public void end() {
         this.end = true;
     }
 
-    public boolean isEnd() {
+    public boolean isEnding() {
         return end;
     }
 }

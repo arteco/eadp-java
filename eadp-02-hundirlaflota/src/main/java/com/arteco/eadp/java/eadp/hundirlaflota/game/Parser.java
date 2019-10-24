@@ -1,13 +1,17 @@
 package com.arteco.eadp.java.eadp.hundirlaflota.game;
 
 import com.arteco.eadp.java.eadp.hundirlaflota.action.Action;
+import com.arteco.eadp.java.eadp.hundirlaflota.action.ActionResult;
 import com.arteco.eadp.java.eadp.hundirlaflota.action.ExitAction;
+import com.arteco.eadp.java.eadp.hundirlaflota.writer.Writer;
 
-import java.io.FileOutputStream;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
-import java.nio.charset.StandardCharsets;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -33,35 +37,25 @@ public class Parser {
      * @param arguments argumentos de entrada del usuario [comando, arg1, arg2, ...]
      * @return devuelve la lista de acciones ejecutadas
      */
-    public List<Action> executeActions(List<Object> arguments) {
-        List<Action> executed = new ArrayList<>();
+    public List<ActionResult> executeActions(Writer writer, Object... arguments) {
+        return executeActions(writer, Arrays.asList(arguments));
+    }
+
+    public List<ActionResult> executeActions(Writer writer, List<Object> arguments) {
+        List<ActionResult> executed = new ArrayList<>();
         if (arguments.size() > 0) {
             game.getActions().stream()
                     .filter(a -> a.getName().equals(arguments.get(0)))
                     .forEach(a -> {
-                        appendLog("Input = " + arguments.toString() + EOL);
+                        writer.append("Input = ").append(arguments.toString()).append(EOL);
                         String output = a.run(game, arguments.subList(1, arguments.size()));
-                        appendLog(output);
-                        executed.add(a);
-                        if (a instanceof ExitAction) {
-
-                            reader.i nterrupt();
-                        }
+                        writer.append(output);
+                        executed.add(new ActionResult(output));
                     });
         }
         return executed;
     }
 
-    private void appendLog(String output) {
-        System.out.println(output);
-        try {
-            FileOutputStream fos = new FileOutputStream("hundirlaflota.log", true);
-            fos.write(output.getBytes(StandardCharsets.UTF_8));
-            fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Procesa la entrada plana de texto procedente del usuario para partirlo en trozos más pequeños, siendo el primero
@@ -105,19 +99,30 @@ public class Parser {
     }
 
     public void start(BlockingQueue<List<Object>> inputs) {
+        ByteBuffer buff = ByteBuffer.allocate(255);
+        ReadableByteChannel channel = Channels.newChannel(System.in);
         this.reader = new Thread(() -> {
-            while (!game.isEnd()) {
+            boolean exitDetected = false;
+            while (!game.isEnding() && !exitDetected) {
                 try {
-                    byte[] bytes = new byte[255];
-                    int n = System.in.read(bytes);
-                    String line = new String(bytes, 0, n);
-                    List<Object> args = parseLine(line);
-                    inputs.add(args);
+                    int res = channel.read(buff);
+                    if (res > 0) {
+                        String line = new String(buff.array(), 0, res);
+                        buff.clear();
+                        List<Object> args = parseLine(line);
+                        inputs.add(args);
+                        if (ExitAction.EXIT.equals(args.get(0))) {
+                            exitDetected = true;
+                        }
+
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+        this.reader.setDaemon(true);
+        this.reader.setName("User Input Thread");
         this.reader.start();
     }
 

@@ -59,8 +59,8 @@ public class LaunchAction implements Action {
     private Pos getUserLaunchPos(List<Object> arguments) {
         Pos pos = null;
         try {
-            Double x = (Double) arguments.get(0);
-            Double y = (Double) arguments.get(1);
+            Number x = (Number) arguments.get(0);
+            Number y = (Number) arguments.get(1);
             pos = new Pos(x.intValue(), y.intValue());
         } catch (Exception e) {
             // System.err.println(e.getMessage());

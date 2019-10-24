@@ -6,27 +6,25 @@ package com.arteco.eadp.java.eadp.hundirlaflota.game;
  * info@arteco-consulting.com
  */
 public class Boat {
-    private final int id;
     private final String name;
     private final int size;
     private final boolean[] impacted;
+    private final Pos pos;
+    private final boolean horizontal;
 
-    public Boat(Fleet fleet, int id) {
-        this(id, fleet.getName(), fleet.getSize());
+    public Boat(Fleet fleet, Pos pos, boolean horizontal) {
+        this(fleet.getName(), fleet.getSize(), pos, horizontal);
     }
 
 
-    public Boat(int id, String name, int size) {
-        this.id = id;
+    public Boat(String name, int size, Pos pos, boolean horizontal) {
         this.name = name;
         this.size = size;
         this.impacted = new boolean[size];
+        this.pos = pos;
+        this.horizontal = horizontal;
     }
 
-
-    public int getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -55,5 +53,17 @@ public class Boat {
         if (idx != null && idx >= 0 && idx < size) {
             this.impacted[idx] = true;
         }
+    }
+
+    public Pos getPos() {
+        return pos;
+    }
+
+    public boolean[] getImpacted() {
+        return impacted;
+    }
+
+    public boolean isHorizontal() {
+        return horizontal;
     }
 }

@@ -11,9 +11,11 @@ import java.util.List;
  */
 public class ExitAction implements Action {
 
+    public static final String EXIT = "exit";
+
     @Override
     public String run(Game game, List<Object> arguments) {
-        game.terminate();
+        game.end();
         return "Terminando programa...";
 
     }
@@ -25,6 +27,6 @@ public class ExitAction implements Action {
 
     @Override
     public String getName() {
-        return "exit";
+        return EXIT;
     }
 }

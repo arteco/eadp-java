@@ -40,13 +40,11 @@ public class Board {
 
     private void place(Fleet fleet) {
         for (int i = 0; i < fleet.getQuantity(); i++) {
-            Boat boat = new Boat(fleet, i);
-            boats.add(boat);
-            place(boat);
+            place(fleet, i);
         }
     }
 
-    private void place(Boat boat) {
+    private void place(Fleet fleet, int id) {
         // se realizará una serie de intentos para colocar los barcos
         // si no hay manera de encajarlos se lanza un error.
         // puede ser debido a que haya demasiados barcos o la matriz sea muy pequeña
@@ -55,8 +53,10 @@ public class Board {
             int y = (int) (Math.random() * N);
             Pos pos = new Pos(x, y);
             boolean horizontal = Math.random() > 0.5;
-            if (isFree(pos, horizontal, boat.getSize())) {
+            if (isFree(pos, horizontal, fleet.getSize())) {
+                Boat boat = new Boat(fleet, pos, horizontal);
                 alloc(pos, horizontal, boat);
+                boats.add(boat);
                 return;
             }
         }
@@ -138,5 +138,9 @@ public class Board {
             }
         }
         return false;
+    }
+
+    public List<Boat> getBoats() {
+        return boats;
     }
 }
