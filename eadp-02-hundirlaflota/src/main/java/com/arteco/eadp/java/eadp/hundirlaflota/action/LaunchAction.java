@@ -32,7 +32,7 @@ public class LaunchAction implements Action {
         boolean isCpuAlive = game.getBoardCPU().isAlive();
 
         if (!isUsrAlive || !isCpuAlive) {
-            System.out.println("Partida finalizada! ");
+            System.out.println("\n");
             if (isCpuAlive == isUsrAlive) {
                 System.out.println("¡¡¡EMPATE!!!");
             } else if (isCpuAlive) {
@@ -41,6 +41,7 @@ public class LaunchAction implements Action {
                 System.out.println("¡¡¡ENHORABUENA, HA GANADO :) !!!");
             }
             game.print();
+            System.out.println("Partida finalizada!\n");
         }
 
     }
