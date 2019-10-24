@@ -5,6 +5,8 @@ import com.arteco.eadp.java.eadp.hundirlaflota.game.Game;
 import java.util.List;
 
 public interface Action {
+    String EOL = "\n";
+
     /**
      * Ejecuta la acción sobre el juego indicado por parámetros según los argumentos citados
      * Si la acción no requiere argumentos, éstos se podrán ignorar
@@ -12,7 +14,7 @@ public interface Action {
      * @param game      partida en curso sobre la que aplicar la acción
      * @param arguments argumentos introducidos por el usuario
      */
-    void run(Game game, List<Object> arguments);
+    String run(Game game, List<Object> arguments);
 
     /**
      * Devuelve la descripción de la acción para la impresión de la ayuda

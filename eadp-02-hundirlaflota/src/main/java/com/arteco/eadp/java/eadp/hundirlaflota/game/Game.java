@@ -1,13 +1,12 @@
 package com.arteco.eadp.java.eadp.hundirlaflota.game;
 
 
-import com.arteco.eadp.java.eadp.hundirlaflota.action.Action;
-import com.arteco.eadp.java.eadp.hundirlaflota.action.LaunchAction;
-import com.arteco.eadp.java.eadp.hundirlaflota.action.PrintAction;
-import com.arteco.eadp.java.eadp.hundirlaflota.action.StartAction;
+import com.arteco.eadp.java.eadp.hundirlaflota.action.*;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.arteco.eadp.java.eadp.hundirlaflota.action.Action.EOL;
 
 public class Game {
 
@@ -19,9 +18,11 @@ public class Game {
     private final List<Action> actions = Arrays.asList(
             new StartAction(),
             new PrintAction(),
-            new LaunchAction()
+            new LaunchAction(),
+            new ExitAction()
 
     );
+    private boolean end = false;
 
     public Game() {
         this(10, Arrays.asList(
@@ -59,10 +60,20 @@ public class Game {
         return boardCPU;
     }
 
-    public void print() {
-        System.out.println("Usuario");
-        System.out.println(this.getBoardUSR().print());
-        System.out.println("CPU");
-        System.out.println(this.getBoardCPU().print());
+    public String print() {
+        StringBuilder stb = new StringBuilder();
+        stb.append("Usuario").append(EOL);
+        stb.append(this.getBoardUSR().print()).append(EOL);
+        stb.append("CPU").append(EOL);
+        stb.append(this.getBoardCPU().print()).append(EOL);
+        return stb.toString();
+    }
+
+    public void terminate() {
+        this.end = true;
+    }
+
+    public boolean isEnd() {
+        return end;
     }
 }

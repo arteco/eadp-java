@@ -15,7 +15,7 @@ import java.util.List;
 public class StartAction implements Action {
 
     @Override
-    public void run(Game game, List<Object> arguments) {
+    public String run(Game game, List<Object> arguments) {
         List<Fleet> fleet = game.getFleets();
 
         if (arguments != null && arguments.size() > 0) {
@@ -31,7 +31,7 @@ public class StartAction implements Action {
         board.clear();
         board.place(fleet);
 
-        System.out.println("Partida inicializada!");
+        return "Partida inicializada!";
 
     }
 

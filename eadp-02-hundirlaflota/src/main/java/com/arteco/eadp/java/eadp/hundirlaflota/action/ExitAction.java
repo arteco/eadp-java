@@ -9,19 +9,22 @@ import java.util.List;
  * Arteco Consulting SL.
  * info@arteco-consulting.com
  */
-public class PrintAction implements Action {
+public class ExitAction implements Action {
+
     @Override
     public String run(Game game, List<Object> arguments) {
-        return game.print();
+        game.terminate();
+        return "Terminando programa...";
+
     }
 
     @Override
     public String getDescription() {
-        return "Imprime el estado de la partida";
+        return "Termina la ejecución del programa";
     }
 
     @Override
     public String getName() {
-        return "print";
+        return "exit";
     }
 }

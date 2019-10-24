@@ -21,4 +21,9 @@ public class Pos {
                 ", y=" + y +
                 '}';
     }
+
+    public Pos toFinal(boolean horizontal, int size) {
+        return horizontal ? new Pos(x + size, y)
+                : new Pos(x, y + size);
+    }
 }

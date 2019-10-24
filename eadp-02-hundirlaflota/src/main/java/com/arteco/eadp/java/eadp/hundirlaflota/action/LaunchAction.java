@@ -13,37 +13,41 @@ import java.util.List;
  */
 public class LaunchAction implements Action {
     @Override
-    public void run(Game game, List<Object> arguments) {
+    public String run(Game game, List<Object> arguments) {
+        StringBuilder stb = new StringBuilder();
+
         Impact impactUSR;
         Impact impactCPU;
 
         Pos pos = getUserLaunchPos(arguments);
         if (pos != null) {
             impactUSR = game.getBoardCPU().evaluateImpact(pos);
-            System.out.println("User -> " + impactUSR);
+            stb.append("User -> ").append(impactUSR).append(EOL);
         }
 
         pos = getCpuLaunchPos(game);
         impactCPU = game.getBoardUSR().evaluateImpact(pos);
-        System.out.println("Cpu  -> " + impactCPU);
+        stb.append("Cpu  -> ").append(impactCPU).append(EOL);
 
 
         boolean isUsrAlive = game.getBoardUSR().isAlive();
         boolean isCpuAlive = game.getBoardCPU().isAlive();
 
         if (!isUsrAlive || !isCpuAlive) {
-            System.out.println("\n");
+            stb.append(EOL);
             if (isCpuAlive == isUsrAlive) {
-                System.out.println("¡¡¡EMPATE!!!");
+                stb.append("¡¡¡EMPATE!!!");
             } else if (isCpuAlive) {
-                System.out.println("¡¡¡OPS, HA PERDIDO :( !!!");
+                stb.append("¡¡¡OPS, HA PERDIDO :( !!!");
             } else {
-                System.out.println("¡¡¡ENHORABUENA, HA GANADO :) !!!");
+                stb.append("¡¡¡ENHORABUENA, HA GANADO :) !!!");
             }
-            game.print();
-            System.out.println("Partida finalizada!\n");
+            stb.append(EOL);
+            stb.append(game.print());
+            stb.append("Partida finalizada!").append(EOL);
+            stb.append(EOL);
         }
-
+        return stb.toString();
     }
 
     private Pos getCpuLaunchPos(Game game) {
@@ -59,7 +63,7 @@ public class LaunchAction implements Action {
             Double y = (Double) arguments.get(1);
             pos = new Pos(x.intValue(), y.intValue());
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            // System.err.println(e.getMessage());
         }
         return pos;
     }

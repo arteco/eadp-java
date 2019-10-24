@@ -73,7 +73,7 @@ public class Board {
     }
 
     private boolean isFree(Pos pos, boolean horizontal, int size) {
-        if (isValid(pos, size)) {
+        if (!isValid(pos, N) || !isValid(pos.toFinal(horizontal, size), N)) {
             return false;
         }
         try {
@@ -91,7 +91,7 @@ public class Board {
     }
 
     private boolean isValid(Pos pos, int size) {
-        return pos == null || pos.x < 0 || pos.x >= N || pos.y < 0 || pos.y >= N || size >= N || size < 1;
+        return pos != null && pos.x >= 0 && pos.x < size && pos.y >= 0 && pos.y < size;
     }
 
     public String print() {
