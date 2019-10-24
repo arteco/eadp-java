@@ -1,6 +1,6 @@
-package com.arteco.eadp.java.eadp.hundirlaflota.juego;
+package com.arteco.eadp.java.eadp.hundirlaflota.game;
 
-import com.arteco.eadp.java.eadp.hundirlaflota.accion.Action;
+import com.arteco.eadp.java.eadp.hundirlaflota.action.Action;
 
 import java.io.StreamTokenizer;
 import java.io.StringReader;

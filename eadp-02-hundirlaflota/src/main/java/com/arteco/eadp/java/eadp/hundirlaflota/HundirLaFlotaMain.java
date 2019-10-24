@@ -1,8 +1,8 @@
 package com.arteco.eadp.java.eadp.hundirlaflota;
 
-import com.arteco.eadp.java.eadp.hundirlaflota.accion.Action;
-import com.arteco.eadp.java.eadp.hundirlaflota.juego.Game;
-import com.arteco.eadp.java.eadp.hundirlaflota.juego.Parser;
+import com.arteco.eadp.java.eadp.hundirlaflota.action.Action;
+import com.arteco.eadp.java.eadp.hundirlaflota.game.Game;
+import com.arteco.eadp.java.eadp.hundirlaflota.game.Parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;

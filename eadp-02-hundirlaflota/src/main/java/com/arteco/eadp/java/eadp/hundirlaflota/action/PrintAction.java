@@ -1,6 +1,6 @@
-package com.arteco.eadp.java.eadp.hundirlaflota.accion;
+package com.arteco.eadp.java.eadp.hundirlaflota.action;
 
-import com.arteco.eadp.java.eadp.hundirlaflota.juego.Game;
+import com.arteco.eadp.java.eadp.hundirlaflota.game.Game;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 public class PrintAction implements Action {
     @Override
     public void run(Game game, List<Object> arguments) {
-
+       game.print();
     }
 
     @Override
