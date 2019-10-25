@@ -6,3 +6,4 @@ target/
 .project
 nb-configuration.xml
 *.log
+*.iml
