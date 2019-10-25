@@ -1,7 +1,7 @@
 package com.arteco.eadp.java.hotelrural.receiver;
 
 import com.arteco.eadp.java.hotelrural.common.Message;
-import com.arteco.eadp.java.hotelrural.receiver.operation.OperationHandler;
+import com.arteco.eadp.java.hotelrural.receiver.service.BookingService;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -34,16 +34,14 @@ public class HotelServer extends Thread {
             Message response;
 
             Message request = Message.of(socket);
+            System.out.println("Received from client " + request.getContent());
 
             Object dto = request.toDto();
             Set<ConstraintViolation<Object>> errors = validator.validate(dto);
 
             if (errors.isEmpty()) {
-
-                OperationHandler handler = HotelOperations.locateOf(dto);
-                System.out.println("Received from client " + request.getContent());
-                Object res = handler.run(hotelServer, dto);
-
+                BookingService bookingService = hotelServer.getBookingService();
+                Object res = bookingService.executeOperation(hotelServer, dto);
                 response = Message.of(res);
             } else {
                 response = Message.of(errors);

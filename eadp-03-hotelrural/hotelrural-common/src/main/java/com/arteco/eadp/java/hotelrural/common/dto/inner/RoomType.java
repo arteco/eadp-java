@@ -1,4 +1,4 @@
-package com.arteco.eadp.java.hotelrural.common.dto;
+package com.arteco.eadp.java.hotelrural.common.dto.inner;
 
 /**
  * Created by rarnau on 25/10/2019.

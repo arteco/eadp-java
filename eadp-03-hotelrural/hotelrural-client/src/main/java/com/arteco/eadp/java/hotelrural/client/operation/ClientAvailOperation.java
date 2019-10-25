@@ -4,7 +4,7 @@ import com.arteco.eadp.java.hotelrural.client.cli.CliParser;
 import com.arteco.eadp.java.hotelrural.client.cli.HotelClient;
 import com.arteco.eadp.java.hotelrural.common.dto.HotelAvailRequest;
 import com.arteco.eadp.java.hotelrural.common.dto.HotelAvailResponse;
-import com.arteco.eadp.java.hotelrural.common.dto.RoomType;
+import com.arteco.eadp.java.hotelrural.common.dto.inner.RoomType;
 
 import java.io.IOException;
 

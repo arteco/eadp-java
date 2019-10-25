@@ -1,6 +1,8 @@
 package com.arteco.eadp.java.hotelrural.common.dto;
 
-import java.time.LocalDate;
+import com.arteco.eadp.java.hotelrural.common.dto.inner.RoomAvail;
+
+import java.util.List;
 
 /**
  * Created by rarnau on 25/10/2019.
@@ -8,22 +10,13 @@ import java.time.LocalDate;
  * info@arteco-consulting.com
  */
 public class HotelAvailResponse {
-    LocalDate from;
-    LocalDate to;
+    private List<RoomAvail> availability;
 
-    public LocalDate getFrom() {
-        return from;
+    public List<RoomAvail> getAvailability() {
+        return availability;
     }
 
-    public void setFrom(LocalDate from) {
-        this.from = from;
-    }
-
-    public LocalDate getTo() {
-        return to;
-    }
-
-    public void setTo(LocalDate to) {
-        this.to = to;
+    public void setAvailability(List<RoomAvail> availability) {
+        this.availability = availability;
     }
 }

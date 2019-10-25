@@ -1,6 +1,6 @@
 package com.arteco.eadp.java.hotelrural.receiver;
 
-import com.arteco.eadp.java.hotelrural.receiver.operation.*;
+import com.arteco.eadp.java.hotelrural.common.dto.*;
 
 /**
  * Created by rarnau on 24/10/2019.
@@ -8,25 +8,25 @@ import com.arteco.eadp.java.hotelrural.receiver.operation.*;
  * info@arteco-consulting.com
  */
 public enum HotelOperations {
-    availability(new AvailabilityOpHandler()),
-    valuate(new ValuateOpHandler()),
-    confirmation(new ConfirmationOpHandler()),
-    cancellation(new CancellationOpHandler()),
-    bookings(new ListOpHandler()),
-    exit(new ExitOpHandler());
+    availability(HotelAvailRequest.class),
+    valuate(PreBookingRequest.class),
+    confirmation(BookingRequest.class),
+    cancellation(CancellationRequest.class),
+    bookings(BookingsRequest.class),
+    exit(ExitRq.class);
 
-    private final OperationHandler handler;
+    private final Class<?> inputDtoClass;
 
-    HotelOperations(OperationHandler handler) {
-        this.handler = handler;
+    HotelOperations(Class<?> inputDtoClass) {
+        this.inputDtoClass = inputDtoClass;
     }
 
-    public static OperationHandler locateOf(Object dto) {
+    public static HotelOperations locateOf(Object dto) {
         if (dto != null) {
             Class<? extends Object> clazz = dto.getClass();
             for (HotelOperations op : values()) {
-                if (clazz.isAssignableFrom(op.handler.getInputType())) {
-                    return op.handler;
+                if (clazz.isAssignableFrom(op.inputDtoClass)) {
+                    return op;
                 }
             }
         }

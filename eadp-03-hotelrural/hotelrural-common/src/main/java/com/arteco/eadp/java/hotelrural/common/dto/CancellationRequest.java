@@ -6,4 +6,13 @@ package com.arteco.eadp.java.hotelrural.common.dto;
  * info@arteco-consulting.com
  */
 public class CancellationRequest {
+    private Long bookingId;
+
+    public Long getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(Long bookingId) {
+        this.bookingId = bookingId;
+    }
 }

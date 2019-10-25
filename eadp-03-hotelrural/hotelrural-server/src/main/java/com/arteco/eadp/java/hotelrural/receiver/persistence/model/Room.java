@@ -1,7 +1,6 @@
 package com.arteco.eadp.java.hotelrural.receiver.persistence.model;
 
-import com.arteco.eadp.java.hotelrural.common.dto.RoomType;
-import com.arteco.eadp.java.hotelrural.common.dto.RoomType;
+import com.arteco.eadp.java.hotelrural.common.dto.inner.RoomType;
 
 import javax.persistence.*;
 
@@ -13,6 +12,13 @@ public class Room {
 
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
+
+    public Room() {
+    }
+
+    public Room(RoomType roomType) {
+        this.roomType = roomType;
+    }
 
     public Long getId() {
         return id;

@@ -1,5 +1,7 @@
 package com.arteco.eadp.java.hotelrural.receiver;
 
+import com.arteco.eadp.java.hotelrural.receiver.service.BookingService;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -11,6 +13,7 @@ import java.net.Socket;
  */
 public class HotelServerSocket {
     private final ServerSocket serverSocket;
+    private final BookingService bookingService = new BookingService();
     private boolean end;
 
     public HotelServerSocket(int port) throws IOException {
@@ -27,5 +30,9 @@ public class HotelServerSocket {
 
     public void terminate() {
         this.end = true;
+    }
+
+    public BookingService getBookingService() {
+        return bookingService;
     }
 }

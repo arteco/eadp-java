@@ -1,13 +1,13 @@
 <project name="My Site Title">
 
-<body>
-    <links>
-        <item name="Hello" href="hello.html"/>
-    </links>
-    <menu ref="modules" />
-    <menu ref="parent" />
-    <menu ref="reports"/>
-</body>
+    <body>
+        <links>
+            <item name="Hello" href="hello.html"/>
+        </links>
+        <menu ref="modules"/>
+        <menu ref="parent"/>
+        <menu ref="reports"/>
+    </body>
 
 
 </project>
