@@ -15,14 +15,13 @@ import java.time.LocalDate;
 @Entity
 public class Booking {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-
+    @Column(name="bookingFrom")
     private LocalDate from;
 
-    @Temporal(TemporalType.DATE)
+    @Column(name="bookingTo")
     private LocalDate to;
 
     @Enumerated(EnumType.STRING)

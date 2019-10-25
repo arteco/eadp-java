@@ -2,6 +2,11 @@
 
 Este proyecto es la implementación de la práctica 3 del libro de Java: https://elartedeprogramar.net
 
+## CONFIGURACION
+
+Para poder iniciar el servidor debe indicar la Ip y puerto del servidor MysQL en
+eadp-java\eadp-03-hotelrural\hotelrural-server\src\main\resources\META-INF\persistence.xml
+
 ## Requisitos de la práctica
 
 El objetivo de esta práctica es crear un servicio accesible por red que permita reservar plazas hoteleras sobre un hotel

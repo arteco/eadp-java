@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class Price {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Enumerated(EnumType.STRING)

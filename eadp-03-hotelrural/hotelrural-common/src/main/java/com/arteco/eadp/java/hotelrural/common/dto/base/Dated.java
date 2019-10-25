@@ -1,9 +1,13 @@
 package com.arteco.eadp.java.hotelrural.common.dto.base;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 public class Dated {
+    @NotNull
     private LocalDate from;
+
+    @NotNull
     private LocalDate to;
 
     public Dated() {

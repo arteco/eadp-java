@@ -65,9 +65,9 @@ public class BookingService {
     }
 
     private List<Room> initRooms() {
-        System.out.print("Checking room existences");
+        System.out.println("Checking room existences");
         List<Room> list = bookingDao.listAllRooms();
-        System.out.print("Found "+list.size()+" rooms");
+        System.out.println("Found "+list.size()+" rooms");
         if (list.size() == 0) {
             for (int i = 0; i < MAX_SUITE_ROOMS; i++) {
                 list.add(new Room(RoomType.SUITE));
@@ -77,15 +77,15 @@ public class BookingService {
             }
 
             bookingDao.saveRooms(list);
-            System.out.print("Created "+list.size()+" rooms");
+            System.out.println("Created "+list.size()+" rooms");
         }
         return list;
     }
 
     private void initPrices() {
-        System.out.print("Checking prices existences");
+        System.out.println("Checking prices existences");
         List<Price> list = bookingDao.listAllPrices();
-        System.out.print("Found "+list.size()+" prices");
+        System.out.println("Found "+list.size()+" prices");
         if (list.size() == 0) {
             list.add(new Price(RoomType.SUITE, MealPlan.HALF_PLAN, 200.f));
             list.add(new Price(RoomType.SUITE, MealPlan.FULL_PLAN, 250.f));
@@ -94,7 +94,7 @@ public class BookingService {
             list.add(new Price(RoomType.REGULAR, MealPlan.FULL_PLAN, 150.f));
 
             bookingDao.savePrices(list);
-            System.out.print("Created "+list.size()+" prices");
+            System.out.println("Created "+list.size()+" prices");
         }
     }
 

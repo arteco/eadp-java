@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
 import java.util.Optional;
@@ -39,11 +40,17 @@ public class BookingDao {
     }
 
     public void remove(Booking booking) {
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
         entityManager.remove(booking);
+        tx.commit();
     }
 
     public void add(Booking booking) {
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
         entityManager.persist(booking);
+        tx.commit();
     }
 
     public List<Booking> listAll() {
@@ -63,9 +70,12 @@ public class BookingDao {
     }
 
     public void savePrices(List<Price> list) {
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
         for (Price price : list) {
             entityManager.persist(price);
         }
+        tx.commit();
     }
 
     public List<Room> listAllRooms() {
@@ -77,8 +87,11 @@ public class BookingDao {
     }
 
     public void saveRooms(List<Room> list) {
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
         for (Room room : list) {
             entityManager.persist(room);
         }
+        tx.commit();
     }
 }

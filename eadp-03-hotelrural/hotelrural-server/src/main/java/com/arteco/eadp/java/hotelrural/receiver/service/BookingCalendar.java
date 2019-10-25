@@ -41,6 +41,9 @@ class BookingCalendar {
             Map<Long, RoomDay> dayMap = calendar.get(actual);
             for(Map.Entry<Long,RoomDay> entry : dayMap.entrySet()){
                 Integer count = roomAvail.putIfAbsent(entry.getKey(), 0);
+                if (count == null){
+                    count = 0;
+                }
                 count++;
                 roomAvail.put(entry.getKey(),count);
             }

@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Entity
 public class Room {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Enumerated(EnumType.STRING)
