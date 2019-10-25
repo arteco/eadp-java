@@ -12,7 +12,8 @@ public enum HotelOperations {
     valuate(new ValuateOpHandler()),
     confirmation(new ConfirmationOpHandler()),
     cancellation(new CancellationOpHandler()),
-    bookings(new ListOpHandler());
+    bookings(new ListOpHandler()),
+    exit(new ExitOpHandler());
 
     private final OperationHandler handler;
 

@@ -1,12 +1,14 @@
-package com.arteco.eadp.java.eadp.hotelrural.receiver.message;
+package com.arteco.eadp.java.eadp.hotelrural.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -15,10 +17,17 @@ import java.nio.charset.StandardCharsets;
  * info@arteco-consulting.com
  */
 public class Message {
-    public static final String SEPARATOR = "----";
+    private static final String SEPARATOR = "----";
 
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper;
+
+    static {
+        objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.registerModule(new JavaTimeModule());
+    }
 
 
     private final String content;
@@ -29,10 +38,15 @@ public class Message {
         this.content = content;
     }
 
+    public static Message of(Socket socket) throws IOException {
+        Message message = of(socket.getInputStream());
+        socket.shutdownInput();
+        return message;
+    }
+
     public static Message of(InputStream inputStream) throws IOException {
-        BufferedInputStream is = new BufferedInputStream(inputStream);
-        String content = new String(is.readAllBytes());
-        is.close();
+        byte[] bytes = inputStream.readAllBytes();
+        String content = new String(bytes, StandardCharsets.UTF_8);
         String[] parts = content.split(SEPARATOR);
         return new Message(parts[0], parts[1]);
 
@@ -43,21 +57,22 @@ public class Message {
         return new Message(res != null ? res.getClass().getName() : "", content);
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public String getType() {
-        return type;
-    }
-
     public Object toDto() throws ClassNotFoundException, IOException {
         Class<?> dtoClass = Class.forName(type);
         return objectMapper.readValue(content, dtoClass);
     }
 
+    public void writeTo(Socket socket) throws IOException {
+        writeTo(socket.getOutputStream());
+        socket.shutdownOutput();
+    }
+
     public void writeTo(OutputStream outputStream) throws IOException {
         outputStream.write((type + SEPARATOR + content).getBytes(StandardCharsets.UTF_8));
-        outputStream.close();
+        outputStream.flush();
+    }
+
+    public String getContent() {
+        return content;
     }
 }
