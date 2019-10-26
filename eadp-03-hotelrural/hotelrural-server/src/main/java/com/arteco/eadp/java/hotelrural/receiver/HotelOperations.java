@@ -12,7 +12,7 @@ public enum HotelOperations {
     valuate(PreBookingRequest.class),
     confirmation(BookingRequest.class),
     cancellation(CancellationRequest.class),
-    bookings(BookingsRequest.class),
+    bookings(BookingListRequest.class),
     exit(ExitRq.class);
 
     private final Class<?> inputDtoClass;

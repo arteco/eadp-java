@@ -18,12 +18,18 @@ public class HotelRuralClientMain {
             serverHost = args[0];
             serverPort = Integer.parseInt(args[1]);
         }
+        Object lastRequest = null;
+        ClientOperations lastOperation = null;
         CliParser parser = new CliParser(serverHost, serverPort, System.in, System.out);
         while (parser.hasNext()) {
             String[] command = parser.next();
             try {
-                ClientOperations operation = ClientOperations.valueOf(command[0]);
-                operation.getHandler().run(parser);
+                if(lastRequest == null || !"repeat".equalsIgnoreCase(command[0])) {
+                    lastOperation = ClientOperations.valueOf(command[0].toUpperCase().trim());
+                    lastRequest = lastOperation.getHandler().run(parser, null);
+                }else{
+                    lastRequest = lastOperation.getHandler().run(parser, lastRequest);
+                }
             } catch (Exception e) {
                 parser.printError(e);
                 parser.printHelp();

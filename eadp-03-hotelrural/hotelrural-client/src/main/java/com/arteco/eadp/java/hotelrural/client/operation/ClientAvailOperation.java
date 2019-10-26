@@ -15,16 +15,31 @@ import java.io.IOException;
  */
 public class ClientAvailOperation implements ClientOperation {
     @Override
-    public void run(CliParser parser) throws IOException {
+    public Object run(CliParser parser, Object lastRequest) throws IOException {
         HotelClient c = parser.newHotelClient();
 
-        HotelAvailRequest rq = new HotelAvailRequest();
-        rq.setFrom(parser.getUserInputDate("fecha desde"));
-        rq.setTo(parser.getUserInputDate("fecha hasta"));
-        rq.setRoomType(parser.getUserInputEnum(RoomType.class, "tipo de habitación"));
+        HotelAvailRequest rq;
+        if (lastRequest instanceof  HotelAvailRequest){
+            rq = (HotelAvailRequest) lastRequest;
+        }else {
+            rq = new HotelAvailRequest();
+            rq.setFrom(parser.getUserInputDate("fecha desde"));
+            rq.setTo(parser.getUserInputDate("fecha hasta"));
+            rq.setRoomType(parser.getUserInputEnum(RoomType.class, "tipo de habitación"));
+        }
 
         HotelAvailResponse rs = (HotelAvailResponse) c.send(rq);
+        parser.printMessage("Tipos de habitaciones disponibles:");
+        if (rs != null && rs.getAvailability() != null) {
+            rs.getAvailability().forEach(avail -> {
+                parser.printMessage("\tTipo habitación : " + avail.getRoomType());
+                avail.getPrices().forEach(p -> {
+                    parser.printMessage("\t\tRégimen : " + p.getMealPlan() + " -> " + p.getDayPrice());
+                });
+            });
+        }
 
+        return rq;
     }
 
 }

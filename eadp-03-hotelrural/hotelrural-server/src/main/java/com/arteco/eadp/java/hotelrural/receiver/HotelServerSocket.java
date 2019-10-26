@@ -30,6 +30,11 @@ public class HotelServerSocket {
 
     public void terminate() {
         this.end = true;
+        try {
+            this.serverSocket.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public BookingService getBookingService() {

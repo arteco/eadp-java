@@ -32,15 +32,15 @@ public class HotelClient {
         Socket socket = null;
         try {
             Message requestMessage = Message.of(rq);
+            System.out.println("Sending to the server :" + requestMessage.getContent());
+
             socket = new Socket(host, port);
             socket.setSoTimeout(120 * 1000);
 
             requestMessage.writeTo(socket);
-
             Message responseMessage = Message.of(socket);
 
-            System.out.println("Received from server " + responseMessage.getContent());
-
+            System.out.println("Received from server  :" + responseMessage.getContent());
             dto = responseMessage.toDto();
         } catch (Exception e) {
             e.printStackTrace();

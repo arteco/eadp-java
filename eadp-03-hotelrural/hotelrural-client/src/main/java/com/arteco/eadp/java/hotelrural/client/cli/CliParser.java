@@ -22,7 +22,6 @@ public class CliParser {
     private final String serverHost;
     private final int serverPort;
     private String[] parts;
-    private String datePattern = "dd/MM/yyyy";
 
     public CliParser(String serverHost, int serverPort, InputStream in, PrintStream printStream) {
         this.reader = new BufferedReader(new InputStreamReader(in));
@@ -41,11 +40,7 @@ public class CliParser {
         try {
             String line = reader.readLine();
             parts = line.split(" ");
-            if (parts.length > 0 && "exit".equals(parts[0])) {
-                return false;
-            } else {
-                return true;
-            }
+            return parts.length <= 0 || !"exit".equals(parts[0]);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,11 +65,11 @@ public class CliParser {
         e.printStackTrace(printer);
     }
 
-    public String getServerHost() {
+    private String getServerHost() {
         return serverHost;
     }
 
-    public int getServerPort() {
+    private int getServerPort() {
         return serverPort;
     }
 
@@ -83,6 +78,7 @@ public class CliParser {
     }
 
     public LocalDate getUserInputDate(String nombre) {
+        String datePattern = "dd-MM-yyyy";
         System.out.println("Indique [" + nombre + "] con " + datePattern + ":");
         try {
             String raw = reader.readLine();
@@ -102,6 +98,30 @@ public class CliParser {
             if (raw.length() > 0) {
                 return Enum.valueOf(enumClass, raw);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void printMessage(String msg) {
+        printer.println(msg);
+    }
+
+    public String getUserInputString(String nombre) {
+        System.out.println("Indique [" + nombre + "] :");
+        try {
+            return reader.readLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Long getUserInputLong(String nombre) {
+        System.out.println("Indique [" + nombre + "] :");
+        try {
+            return Long.parseLong(reader.readLine());
         } catch (Exception e) {
             e.printStackTrace();
         }

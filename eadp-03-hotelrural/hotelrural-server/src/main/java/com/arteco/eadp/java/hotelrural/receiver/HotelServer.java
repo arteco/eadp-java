@@ -34,7 +34,7 @@ public class HotelServer extends Thread {
             Message response;
 
             Message request = Message.of(socket);
-            System.out.println("Received from client " + request.getContent());
+            System.out.println("Received from client :" + request.getContent());
 
             Object dto = request.toDto();
             Set<ConstraintViolation<Object>> errors = validator.validate(dto);
@@ -47,6 +47,7 @@ public class HotelServer extends Thread {
                 response = Message.of(errors);
             }
 
+            System.out.println("Sending to client    :" + response.getContent());
             response.writeTo(socket);
 
 

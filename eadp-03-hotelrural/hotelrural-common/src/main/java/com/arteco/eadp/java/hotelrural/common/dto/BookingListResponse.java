@@ -1,7 +1,5 @@
 package com.arteco.eadp.java.hotelrural.common.dto;
 
-import com.arteco.eadp.java.hotelrural.common.dto.base.BookData;
-
 import java.util.List;
 
 /**
@@ -9,14 +7,14 @@ import java.util.List;
  * Arteco Consulting SL.
  * info@arteco-consulting.com
  */
-public class BookingsResponse {
-    private List<BookData> bookings;
+public class BookingListResponse {
+    private List<BookingResponse> bookings;
 
-    public List<BookData> getBookings() {
+    public List<BookingResponse> getBookings() {
         return bookings;
     }
 
-    public void setBookings(List<BookData> bookings) {
+    public void setBookings(List<BookingResponse> bookings) {
         this.bookings = bookings;
     }
 }

@@ -1,9 +1,7 @@
 package com.arteco.eadp.java.hotelrural.common.dto;
 
-import com.arteco.eadp.java.hotelrural.common.dto.base.RoomTypeData;
-import com.arteco.eadp.java.hotelrural.common.dto.inner.RoomType;
+import com.arteco.eadp.java.hotelrural.common.dto.base.Dated;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
@@ -11,15 +9,9 @@ import java.time.LocalDate;
  * Arteco Consulting SL.
  * info@arteco-consulting.com
  */
-public class HotelAvailRequest implements RoomTypeData {
-
-    @NotNull
+public class BookingListRequest implements Dated {
     private LocalDate from;
-
-    @NotNull
     private LocalDate to;
-
-    private RoomType roomType;
 
     @Override
     public LocalDate getFrom() {
@@ -38,15 +30,4 @@ public class HotelAvailRequest implements RoomTypeData {
     public void setTo(LocalDate to) {
         this.to = to;
     }
-
-    @Override
-    public RoomType getRoomType() {
-        return roomType;
-    }
-
-    public void setRoomType(RoomType roomType) {
-        this.roomType = roomType;
-    }
-
-
 }

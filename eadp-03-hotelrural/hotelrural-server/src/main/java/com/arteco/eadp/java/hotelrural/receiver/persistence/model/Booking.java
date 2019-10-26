@@ -1,7 +1,8 @@
 package com.arteco.eadp.java.hotelrural.receiver.persistence.model;
 
 import com.arteco.eadp.java.hotelrural.common.dto.BookingRequest;
-import com.arteco.eadp.java.hotelrural.common.dto.base.BookData;
+import com.arteco.eadp.java.hotelrural.common.dto.BookingResponse;
+import com.arteco.eadp.java.hotelrural.common.dto.base.Dated;
 import com.arteco.eadp.java.hotelrural.common.dto.inner.MealPlan;
 
 import javax.persistence.*;
@@ -13,15 +14,15 @@ import java.time.LocalDate;
  * info@arteco-consulting.com
  */
 @Entity
-public class Booking {
+public class Booking implements Dated {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name="bookingFrom")
+    @Column(name = "bookingFrom")
     private LocalDate from;
 
-    @Column(name="bookingTo")
+    @Column(name = "bookingTo")
     private LocalDate to;
 
     @Enumerated(EnumType.STRING)
@@ -101,12 +102,12 @@ public class Booking {
         this.customerId = customerId;
     }
 
-    public BookData toBookData() {
-        BookData data = new BookData();
+    public BookingResponse toBookData() {
+        BookingResponse data = new BookingResponse();
         return toBookData(data);
     }
 
-    public BookData toBookData(BookData data) {
+    public BookingResponse toBookData(BookingResponse data) {
         data.setCustomerId(this.customerId);
         data.setFrom(this.from);
         data.setMealPlan(this.mealPlan);

@@ -10,5 +10,5 @@ import java.io.IOException;
  * info@arteco-consulting.com
  */
 public interface ClientOperation {
-    void run(CliParser parser) throws IOException, ClassNotFoundException;
+    Object run(CliParser parser, Object lastRequest) throws IOException;
 }

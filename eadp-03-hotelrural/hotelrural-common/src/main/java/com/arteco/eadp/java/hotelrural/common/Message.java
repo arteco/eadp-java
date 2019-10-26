@@ -10,6 +10,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by rarnau on 24/10/2019.
@@ -44,12 +48,28 @@ public class Message {
         return message;
     }
 
-    public static Message of(InputStream inputStream) throws IOException {
-        byte[] bytes = inputStream.readAllBytes();
-        String content = new String(bytes, StandardCharsets.UTF_8);
-        String[] parts = content.split(SEPARATOR);
-        return new Message(parts[0], parts[1]);
+    public static Message of(InputStream inputStream) {
+        Message result;
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Future<Message> future = executorService.submit(() -> {
+            byte[] bytes = inputStream.readAllBytes();
+            String content = new String(bytes, StandardCharsets.UTF_8);
+            String[] parts = content.split(SEPARATOR);
+            return new Message(parts[0], parts[1]);
+        });
+        try {
+            result = future.get(15, TimeUnit.SECONDS);
+        } catch (Exception to) {
+            result = Message.empty();
+        } finally {
+            executorService.shutdownNow();
+        }
+        return result;
 
+    }
+
+    private static Message empty() {
+        return new Message("","");
     }
 
     public static Message of(Object res) throws JsonProcessingException {
@@ -58,6 +78,9 @@ public class Message {
     }
 
     public Object toDto() throws ClassNotFoundException, IOException {
+        if (type == null || type.length()==0){
+            return null;
+        }
         Class<?> dtoClass = Class.forName(type);
         return objectMapper.readValue(content, dtoClass);
     }

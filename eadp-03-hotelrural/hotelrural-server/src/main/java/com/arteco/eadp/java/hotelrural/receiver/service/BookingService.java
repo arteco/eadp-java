@@ -28,7 +28,7 @@ public class BookingService {
     private static final int MAX_SUITE_ROOMS = 2;
     private static final int MAX_REGULAR_ROOMS = 5;
 
-    private final BookingCalendar bookingCalendar ;
+    private final BookingCalendar bookingCalendar;
     private final BookingDao bookingDao = BookingDao.getInstance();
 
     public BookingService() {
@@ -58,7 +58,7 @@ public class BookingService {
                 case cancellation:
                     return this.cancellation((CancellationRequest) dto);
                 case bookings:
-                    return this.bookings((BookingsRequest) dto);
+                    return this.bookings((BookingListRequest) dto);
             }
         }
         return null;
@@ -67,7 +67,7 @@ public class BookingService {
     private List<Room> initRooms() {
         System.out.println("Checking room existences");
         List<Room> list = bookingDao.listAllRooms();
-        System.out.println("Found "+list.size()+" rooms");
+        System.out.println("Found " + list.size() + " rooms");
         if (list.size() == 0) {
             for (int i = 0; i < MAX_SUITE_ROOMS; i++) {
                 list.add(new Room(RoomType.SUITE));
@@ -77,7 +77,7 @@ public class BookingService {
             }
 
             bookingDao.saveRooms(list);
-            System.out.println("Created "+list.size()+" rooms");
+            System.out.println("Created " + list.size() + " rooms");
         }
         return list;
     }
@@ -85,7 +85,7 @@ public class BookingService {
     private void initPrices() {
         System.out.println("Checking prices existences");
         List<Price> list = bookingDao.listAllPrices();
-        System.out.println("Found "+list.size()+" prices");
+        System.out.println("Found " + list.size() + " prices");
         if (list.size() == 0) {
             list.add(new Price(RoomType.SUITE, MealPlan.HALF_PLAN, 200.f));
             list.add(new Price(RoomType.SUITE, MealPlan.FULL_PLAN, 250.f));
@@ -94,7 +94,7 @@ public class BookingService {
             list.add(new Price(RoomType.REGULAR, MealPlan.FULL_PLAN, 150.f));
 
             bookingDao.savePrices(list);
-            System.out.println("Created "+list.size()+" prices");
+            System.out.println("Created " + list.size() + " prices");
         }
     }
 
@@ -149,13 +149,14 @@ public class BookingService {
             bookingDao.remove(booking);
             bookingCalendar.unlock(booking);
             result = new CancellationResponse();
+            result.setBookingId(bookingId);
         }
         return result;
     }
 
-    private BookingsResponse bookings(BookingsRequest request) {
+    private BookingListResponse bookings(BookingListRequest request) {
         List<Booking> bookings = bookingDao.list(request);
-        BookingsResponse result = new BookingsResponse();
+        BookingListResponse result = new BookingListResponse();
         result.setBookings(bookings.stream()
                 .map(Booking::toBookData)
                 .collect(Collectors.toList()));
@@ -216,7 +217,9 @@ public class BookingService {
         for (RoomType rType : prices.keySet()) {
             Map<MealPlan, Float> mealPrice = prices.get(rType);
             RoomAvail rAvail = getRoomAvail(rType, res, mealPrice);
-            avail.add(rAvail);
+            if(rAvail!=null) {
+                avail.add(rAvail);
+            }
         }
         return resp;
     }

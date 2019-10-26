@@ -7,9 +7,10 @@ import com.arteco.eadp.java.hotelrural.client.cli.CliParser;
  * Arteco Consulting SL.
  * info@arteco-consulting.com
  */
-public class ClientExitOperation implements ClientOperation {
+public class ClientNoOperation implements ClientOperation {
     @Override
-    public void run(CliParser parser) {
+    public Object run(CliParser parser, Object lastRequest) {
         // do nothing;
+        return null;
     }
 }
