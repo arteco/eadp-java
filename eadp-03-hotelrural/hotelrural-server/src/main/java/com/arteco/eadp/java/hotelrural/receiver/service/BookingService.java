@@ -122,7 +122,7 @@ public class BookingService {
         return result;
     }
 
-    private BookingResponse confirmation(BookingRequest request) {
+    private synchronized BookingResponse confirmation(BookingRequest request) {
         // consultar habitaciones disponibles
         List<Room> rooms = bookingCalendar.availability(request);
         // coger la 1ª libre
