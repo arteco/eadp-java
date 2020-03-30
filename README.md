@@ -1,4 +1,5 @@
-# eadp-java
+# Prácticas del libro Guía Javañol
+## Elartedeprogramar.net (EADP)
 
 Código fuente de las prácticas de Java del libro __Guía Javañol__ disponible en la  [página oficial del libro](https://elartedeprogramar.net/libro-guia-java).
 
